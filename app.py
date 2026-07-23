@@ -4,8 +4,9 @@ import joblib as jb
 
 st.title('Simple ML app for house price')
 
-model = jb.load("iowa_model.pkl")
-features = jb.load("iowa_features.pkl")
+model_dt = jb.load("models/iowa_model.pkl")
+model_rf = jb.load("models/iowa_model_rf.pkl")
+features = jb.load("models/iowa_features.pkl")
 
 #['LotArea', 'YearBuilt', '1stFlrSF', '2ndFlrSF', 'FullBath', 'BedroomAbvGr', 'TotRmsAbvGrd']
 lot_area = st.number_input('Lot Area', value=8000)
@@ -16,9 +17,17 @@ full_bath = st.number_input('Full Bath', value=2)
 bedroom_abv_gr = st.number_input('Bedroom Abv Gr', value=3)
 total_rooms_abv_grd = st.number_input('Total Rooms Abv Grd', value=6)
 
-if st.button('Predict Price'):
+
+if st.button('Predict Price with Decision Tree'):
     #transform this to df for predictions
     input_data_list = [lot_area, year_built, first_floor_sf, second_floor_sf, full_bath, bedroom_abv_gr, total_rooms_abv_grd]
     input_df = pd.DataFrame([input_data_list], columns=features)
-    prediction  = model.predict(input_df)[0]
-    st.write(f"Predicted Price: ${prediction:,.2f}")
+    prediction_dt = model_dt.predict(input_df)[0]
+    st.write(f"Decision Tree Predicted Price: $**{prediction_dt:,.2f}**")
+
+if st.button('Predict Price with Random Forest'):
+    #transform this to df for predictions
+    input_data_list = [lot_area, year_built, first_floor_sf, second_floor_sf, full_bath, bedroom_abv_gr, total_rooms_abv_grd]
+    input_df = pd.DataFrame([input_data_list], columns=features)
+    prediction_rf = model_rf.predict(input_df)[0]
+    st.write(f"Random Forest Predicted Price: $**{prediction_rf:,.2f}**")
