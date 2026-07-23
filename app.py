@@ -17,15 +17,16 @@ full_bath = st.number_input('Full Bath', value=2)
 bedroom_abv_gr = st.number_input('Bedroom Abv Gr', value=3)
 total_rooms_abv_grd = st.number_input('Total Rooms Abv Grd', value=6)
 
+option = st.selectbox('Select Model', ['Decision Tree', 'Random Forest'])
 
-if st.button('Predict Price with Decision Tree'):
+if option == 'Decision Tree' and st.button('Predict Price'):
     #transform this to df for predictions
     input_data_list = [lot_area, year_built, first_floor_sf, second_floor_sf, full_bath, bedroom_abv_gr, total_rooms_abv_grd]
     input_df = pd.DataFrame([input_data_list], columns=features)
     prediction_dt = model_dt.predict(input_df)[0]
     st.write(f"Decision Tree Predicted Price: $**{prediction_dt:,.2f}**")
 
-if st.button('Predict Price with Random Forest'):
+if option == 'Random Forest' and st.button('Predict Price'):
     #transform this to df for predictions
     input_data_list = [lot_area, year_built, first_floor_sf, second_floor_sf, full_bath, bedroom_abv_gr, total_rooms_abv_grd]
     input_df = pd.DataFrame([input_data_list], columns=features)
