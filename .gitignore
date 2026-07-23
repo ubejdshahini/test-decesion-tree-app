@@ -216,3 +216,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+.venv
+iowa_features.pkl
+iowa_model.pkl
